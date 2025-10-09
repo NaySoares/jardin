@@ -16,12 +16,11 @@ export const Header = () => {
 
 	return (
 		<header className="bg-black text-white w-full">
-			<nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+			<nav className="mx-auto py-3 px-6 flex justify-between items-center">
 
-				{/* Logo */}
 				<div className="flex items-center">
-					<Sprout className="h-8 w-8 mr-2" />
-					<Link href="/" className="text-2xl font-bold">
+					<Sprout className="h-5 w-5 mr-2" />
+					<Link href="/" className="text-base font-bold">
 						Jar-din
 					</Link>
 				</div>
@@ -33,7 +32,7 @@ export const Header = () => {
 							<Link
 								key={link.href}
 								href={link.href}
-								className={`relative text-lg hover:text-gray-300 ${isActive ? 'text-white' : 'text-gray-400'
+								className={`relative text-base hover:text-gray-300 ${isActive ? 'text-white' : 'text-gray-400'
 									}`}
 							>
 								{link.label}
@@ -45,16 +44,16 @@ export const Header = () => {
 					})}
 				</div>
 
-				<div className="flex items-center space-x-6">
+				<div className="flex items-center space-x-3">
 					<Link
 						href="/"
-						className="hidden sm:block text-base hover:text-gray-300"
+						className="hidden sm:block text-sm hover:text-gray-300"
 					>
 						Se torne um locador
 					</Link>
-					<button className="flex items-center space-x-3 bg-white text-black px-3 py-2 rounded-full hover:bg-gray-200">
-						<Menu className="h-5 w-5" />
-						<User className="h-7 w-7 bg-gray-300 rounded-full p-1" />
+					<button className="flex items-center space-x-3 bg-white text-black px-2 py-1 rounded-full hover:bg-gray-200">
+						<Menu className="h-3 w-3 hover:cursor-pointer" />
+						<User className="h-5 w-5 bg-gray-300 rounded-full p-1 hover:cursor-pointer" />
 					</button>
 				</div>
 
