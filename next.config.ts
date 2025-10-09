@@ -1,7 +1,10 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  // configuração para import de imagens externas
+  images: {
+    domains: ['github.com', 'images.unsplash.com'],
+  },
+}
 
-export default nextConfig;
+export default nextConfig
