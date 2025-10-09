@@ -1,8 +1,27 @@
+import { ProductCard } from '@/components/productCard'
+
 export default function CatalogPage() {
+  const FilterSelect = () => {
+    return (
+      <select className="text-xs border border-gray-300 rounded-lg cursor-pointer p-2 py-1 w-fit max-w-[150px] mb-4">
+        <option value="all">Todos</option>
+        <option value="fruits">Frutas</option>
+        <option value="vegetables">Vegetais</option>
+        <option value="flowers">Flores</option>
+      </select>
+    )
+  }
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold"> Catálogo </h1>
-      <p className="mt-4 text-lg"> Explore nossa coleção de espaços verdes </p>
+    <div className="min-h-screen flex flex-col p-4">
+      <FilterSelect />
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ProductCard url="/catalog/product/1" />
+        <ProductCard url="/catalog/product/2" />
+        <ProductCard url="/catalog/product/3" />
+        <ProductCard url="/catalog/product/4" />
+        <ProductCard url="/catalog/product/5" />
+        <ProductCard url="/catalog/product/6" />
+      </div>
     </div>
   )
 }
