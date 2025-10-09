@@ -44,7 +44,7 @@ export default function Home() {
   const imageBackground = '/images/image_home.jpg'
   return (
     <>
-      <div className="relative bg-black flex min-h-[calc(100vh-52px)] flex-col items-center justify-center p-24  object-cover overflow-hidden">
+      <div className="relative bg-black flex min-h-[calc(100vh-52px)] flex-col items-center justify-center p-4  object-cover overflow-hidden">
         <Image
           width={1920}
           height={1080}
