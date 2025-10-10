@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 interface GardenCardProps {
   imageUrl: string
-  type: string
+  size: string
   title: string
   description: string
   price: number
@@ -12,15 +12,27 @@ interface GardenCardProps {
 
 export const GardenCard: React.FC<GardenCardProps> = ({
   imageUrl,
-  type,
+  size,
   title,
   description,
   price,
   url,
 }) => {
+  const convertSizeToType = (size: string): string => {
+    const value = Number(size)
+
+    if (!Number.isFinite(value)) return 'Tamanho não informado'
+
+    return [
+      { max: 50, label: 'Pequeno' },
+      { max: 100, label: 'Médio' },
+      { max: Infinity, label: 'Grande' },
+    ].find(({ max }) => value < max)!.label
+  }
+
   return (
     <Link href={url}>
-      <div className="shadow-md overflow-hidden flex flex-row">
+      <div className="shadow-md overflow-hidden flex flex-row md:min-w-xl md:w-xl w-full">
         <div className="relative w-56 flex-shrink-0 flex">
           <Image
             src={imageUrl}
@@ -35,7 +47,9 @@ export const GardenCard: React.FC<GardenCardProps> = ({
           <div>
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-xs text-gray-500">{type}</p>
+                <p className="text-xs text-gray-500">
+                  {convertSizeToType(size)}
+                </p>
                 <h2 className="text-xl font-bold">{title}</h2>
               </div>
               <button

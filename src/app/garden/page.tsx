@@ -1,5 +1,9 @@
+'use client'
+import { IGarden } from '@/@types/garden'
 import { GardenCard } from '@/components/GardenCard'
+import { getGardens } from '@/services/gardenService'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 interface IFilter {
   item: itemsFilter[]
@@ -11,24 +15,16 @@ interface itemsFilter {
 }
 
 export default function GardenPage() {
-  const gardens = [
-    {
-      imageUrl: '/images/jardim1.png',
-      type: 'Pequeno',
-      title: 'Jardim em Nazaré',
-      description:
-        'Jardim bem localizado no centro de Belém, terra fértil e com fácil manuseio.',
-      price: 325,
-    },
-    {
-      imageUrl: '/images/jardim2.png',
-      type: 'Pequeno',
-      title: 'Jardim em Nazaré',
-      description:
-        'Jardim bem localizado no centro de Belém, terra fértil e com fácil manuseio.',
-      price: 325,
-    },
-  ]
+  const [gardens, setGardens] = useState<IGarden[]>([])
+
+  useEffect(() => {
+    const fetchGardens = async () => {
+      const data = await getGardens()
+      setGardens(data)
+    }
+
+    fetchGardens()
+  }, [])
 
   const filterPrices = [
     { label: 'Menor preço', value: 'low' },
@@ -52,6 +48,14 @@ export default function GardenPage() {
     )
   }
 
+  const NoContent = () => {
+    return (
+      <div className="flex flex-col justify-center items-center w-full h-full min-w-[500px]">
+        <p className="text-lg text-gray-500">Nenhum jardim encontrado.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col min-h-screen p-8">
       <div className="flex flex-row gap-4 justify-start items-center">
@@ -60,19 +64,23 @@ export default function GardenPage() {
       </div>
       <div className="w-full flex flex-row justify-center gap-4">
         <div className="flex flex-col gap-6 max-w-4xl">
-          {gardens.map((garden, index) => (
-            <GardenCard
-              key={index}
-              imageUrl={garden.imageUrl}
-              type={garden.type}
-              title={garden.title}
-              description={garden.description}
-              price={garden.price}
-              url={`/garden/${index + 1}`}
-            />
-          ))}
+          {gardens.length > 0 ? (
+            gardens.map((garden) => (
+              <GardenCard
+                key={garden.id}
+                imageUrl="/images/jardim1.png"
+                size={garden.size}
+                title={garden.name}
+                description={garden.description}
+                price={Number(garden.price)}
+                url={`/garden/${garden.id}`}
+              />
+            ))
+          ) : (
+            <NoContent />
+          )}
         </div>
-        <div className="">
+        <div className="lg:flex hidden">
           <Image
             src="/images/map.jpg"
             alt="Map"
