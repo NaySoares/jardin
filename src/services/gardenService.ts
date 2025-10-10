@@ -10,3 +10,13 @@ export const getGardens = async (): Promise<IGarden[]> => {
     return []
   }
 }
+
+export const getGarden = async (id: string): Promise<IGarden | null> => {
+  try {
+    const response = await api.get(`/gardens/${id}`)
+    return response.data
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}
