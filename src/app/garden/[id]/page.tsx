@@ -83,7 +83,7 @@ export default function GardenPage() {
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold">{garden?.name}</h1>
           <p className="text-xs text-gray-500 text-decoration-line: underline">
-            {gardenLocation}
+            {garden?.address ? garden.address : "Localização não informada"}
           </p>
         </div>
         <div className="flex flex-row gap-2">

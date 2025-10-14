@@ -11,6 +11,7 @@ export interface IGarden {
   createdAt: string // 2025-10-10T03:22:00.375Z
   updatedAt: string // 2025-10-10T03:22:00.375Z
   userId: number
+  address: string
 }
 
 type GardenStatus = 'AVAILABLE' | 'RESERVED'
