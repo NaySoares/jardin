@@ -86,7 +86,7 @@ export default function GardenPage() {
             alt="Map"
             width={700}
             height={900}
-            className="rounded-lg shadow-md"
+            className="rounded-lg shadow-md max-h-[600px]"
           />
         </div>
       </div>

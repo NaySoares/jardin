@@ -1,11 +1,28 @@
 'use client'
+import { IProduct } from '@/@types/product'
+import { getProduct } from '@/services/productService'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function ProductPage() {
+  const { id } = useParams()
   const [count, setCount] = useState(1)
-  const priceDefault = 120.0
+  const [product, setProduct] = useState<IProduct | null>(null)
   const isRich = count > 10
+
+  useEffect(() => {
+    const fetchProduct = async (id: string) => {
+      const data = await getProduct(id)
+      setProduct(data)
+    }
+
+    if (typeof id === 'string') {
+      fetchProduct(id)
+    }
+  }, [id])
+
+  const priceProduct = product?.price ? Number(product.price) : 0
 
   const ButtonCounter = () => {
     return (
@@ -94,20 +111,14 @@ export default function ProductPage() {
       <div className="flex flex-col w-full max-w-[400px]">
         <header className="w-full p-4 flex flex-col justify-start items-start border-b mb-4">
           <div className="flex flex-col">
-            <h1 className="text-2xl font-bold">Maçã Cop30</h1>
+            <h1 className="text-2xl font-bold">{product?.name}</h1>
             <p className="text-base text-gray-500">
-              R$ {priceDefault.toFixed(2)}
+              R$ {priceProduct.toFixed(2)}
             </p>
           </div>
         </header>
         <div className="p-4 flex flex-col justify-center items-center w-full gap-4">
-          <p className="text-sm">
-            Maçã organica cultivada com adubo natural provindo dos impostos que
-            você paga. Sim, você leu certo! Ao adquirir essa maçã, você está
-            comprando algo produzido com o seu dinheiro e tendo que pagar
-            novamente, detalhe importante: existe imposto sobre o valor total do
-            produto.
-          </p>
+          <p className="text-sm">{product?.description}</p>
           <div className="flex flex-row items-center w-full justify-between">
             <div className="flex flex-col items-start">
               <p className="text-sm font-bold">Quantidade</p>
@@ -116,7 +127,7 @@ export default function ProductPage() {
             <div className="flex flex-col items-end">
               <p className="text-sm font-bold">Valor Total</p>
               <p className="text-lg font-bold">
-                R$ {(priceDefault * count).toFixed(2)}
+                R$ {(priceProduct * count).toFixed(2)}
               </p>
             </div>
           </div>

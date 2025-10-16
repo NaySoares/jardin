@@ -1,47 +1,25 @@
+'use client'
+import { IProduct } from '@/@types/product'
 import { ShowcaseCard } from '@/components/showcaseCard'
+import { getProducts } from '@/services/productService'
 import Image from 'next/image'
-
-const products = [
-  {
-    id: 1,
-    imageUrl: '/images/maca_cop30.png',
-    type: 'Fruta',
-    title: 'Maçã Cop30',
-    description:
-      'Maçã organica cultivada com adubo natural provindo dos impostos que você paga',
-    price: 120,
-  },
-  {
-    id: 2,
-    imageUrl: '/images/banana.png',
-    type: 'Fruta',
-    title: 'Banana Prata',
-    description:
-      'Banana madura e docinha, formada pelo desvio de verbas do INSS',
-    price: 120,
-  },
-  {
-    id: 3,
-    imageUrl: '/images/maca_cop30.png',
-    type: 'Fruta',
-    title: 'Maçã Cop30',
-    description:
-      'Maçã organica cultivada com adubo natural provindo dos impostos que você paga',
-    price: 120,
-  },
-  {
-    id: 4,
-    imageUrl: '/images/banana.png',
-    type: 'Fruta',
-    title: 'Banana Prata',
-    description:
-      'Banana madura e docinha, formada pelo desvio de verbas do INSS',
-    price: 120,
-  },
-]
+import { useEffect, useState } from 'react'
 
 export default function Home() {
   const imageBackground = '/images/image_home.jpg'
+
+  const [products, setProducts] = useState<IProduct[]>([])
+  const maxShowcaseItems = 4
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await getProducts()
+      const limitedData = data.slice(0, maxShowcaseItems)
+      setProducts(limitedData)
+    }
+
+    fetchProducts()
+  }, [])
   return (
     <>
       <div className="relative bg-black flex min-h-[calc(100vh-52px)] flex-col items-center justify-center p-4  object-cover overflow-hidden">
@@ -66,8 +44,8 @@ export default function Home() {
           {products.map((product) => (
             <ShowcaseCard
               key={product.id}
-              imageUrl={product.imageUrl}
-              title={product.title}
+              imageUrl={product.imageUrl || '/images/maca_cop30.png'}
+              title={product.name}
               description={product.description}
               href={`/catalog/product/${product.id}`}
             />

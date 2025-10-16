@@ -12,6 +12,16 @@ const selectAPI = () => {
   return process.env.NEXT_PUBLIC_API_URL
 }
 
-export const api = axios.create({
+const api = axios.create({
   baseURL: selectAPI(),
 })
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.log('Erro na requisição:', error)
+    return Promise.reject(error)
+  },
+)
+
+export { api }

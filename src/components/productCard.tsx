@@ -4,16 +4,24 @@ import { useRouter } from 'next/navigation'
 
 interface IProductCard {
   url: string
+  name: string
+  description: string
+  price: string
 }
 
-export const ProductCard = ({ url }: IProductCard) => {
+export const ProductCard = ({
+  url,
+  name,
+  description,
+  price,
+}: IProductCard) => {
   const { push } = useRouter()
 
   const navigateTo = () => {
     push(url)
   }
 
-  const priceDefault = 120
+  const priceProduct = price ? Number(price) : 0
   return (
     <div className="shadow-md overflow-hidden flex flex-row">
       <div className="relative w-56 flex-shrink-0 flex">
@@ -30,10 +38,10 @@ export const ProductCard = ({ url }: IProductCard) => {
         <div>
           <div className="flex justify-between items-start">
             <h2 className="text-sm font-bold">
-              Maçã Cop30 - R$ {priceDefault.toFixed(2)}
+              {name} - R$ {priceProduct.toFixed(2)}
             </h2>
           </div>
-          <p className="text-gray-700 mt-2 text-xs">Descrição da maçã Cop30</p>
+          <p className="text-gray-700 mt-2 text-xs">{description}</p>
         </div>
         <div className="flex items-center justify-center w-full mt-4">
           <button
