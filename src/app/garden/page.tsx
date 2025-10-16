@@ -16,11 +16,14 @@ interface itemsFilter {
 
 export default function GardenPage() {
   const [gardens, setGardens] = useState<IGarden[]>([])
+  const [originalGardens, setOriginalGardens] = useState<IGarden[]>([])
+  const [selectedFilter, setSelectedFilter] = useState<string>('')
 
   useEffect(() => {
     const fetchGardens = async () => {
       const data = await getGardens()
       setGardens(data)
+      setOriginalGardens(data)
     }
 
     fetchGardens()
@@ -38,7 +41,14 @@ export default function GardenPage() {
 
   const FilterSelect = ({ item }: IFilter) => {
     return (
-      <select className="text-xs border border-gray-300 rounded-lg cursor-pointer p-2 py-1 w-fit max-w-[150px] mb-4">
+      <select
+        className="text-xs border border-gray-300 rounded-lg cursor-pointer p-2 py-1 w-fit max-w-[150px] mb-4"
+        onChange={(e) => {
+          handleFilterItems(e.target.value)
+          setSelectedFilter(e.target.value)
+        }}
+        value={selectedFilter}
+      >
         {item.map((item) => (
           <option key={item.value} value={item.value}>
             {item.label}
@@ -46,6 +56,32 @@ export default function GardenPage() {
         ))}
       </select>
     )
+  }
+
+  const handleFilterItems = (value: string) => {
+    let filteredGardens
+
+    if (selectedFilter !== value) {
+      filteredGardens = [...originalGardens]
+    } else {
+      filteredGardens = [...gardens]
+    }
+
+    if (value === 'low') {
+      filteredGardens.sort((a, b) => Number(a.price) - Number(b.price))
+    } else if (value === 'high') {
+      filteredGardens.sort((a, b) => Number(b.price) - Number(a.price))
+    } else if (value === 'available') {
+      filteredGardens = filteredGardens.filter(
+        (garden) => garden.status === 'AVAILABLE',
+      )
+    } else if (value === 'unavailable') {
+      filteredGardens = filteredGardens.filter(
+        (garden) => garden.status === 'RESERVED',
+      )
+    }
+
+    setGardens(filteredGardens)
   }
 
   const NoContent = () => {

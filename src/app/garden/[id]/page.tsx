@@ -39,7 +39,9 @@ export default function GardenPage() {
     }
   }, [id])
 
-  const gardenLocation = 'Nazaré, Belém'
+  const sizeGarden = garden?.size
+    ? Number(garden.size).toFixed(0)
+    : 'Tamanho não informado'
   const imageUrls = [
     {
       src: '/images/jardim1.png',
@@ -83,7 +85,7 @@ export default function GardenPage() {
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold">{garden?.name}</h1>
           <p className="text-xs text-gray-500 text-decoration-line: underline">
-            {garden?.address ? garden.address : "Localização não informada"}
+            {garden?.address ? garden.address : 'Localização não informada'}
           </p>
         </div>
         <div className="flex flex-row gap-2">
@@ -120,7 +122,7 @@ export default function GardenPage() {
                 <div className="flex flex-col flex-grow">
                   <h1 className="text-base font-bold">{garden.name}</h1>
                   <p className="text-xs text-gray-500">
-                    {garden.size} | Pronto para cultivo
+                    {sizeGarden}m² | Pronto para cultivo
                   </p>
                 </div>
                 <Avatar
